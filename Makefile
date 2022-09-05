@@ -1,5 +1,5 @@
 NAME := oci-help
-PACKAGE_NAME := github.com/lemoex/oci-help
+PACKAGE_NAME := github.com/a132395/oci-help
 VERSION := $(shell git describe --tags || echo "unknown-version")
 COMMIT := $(shell git rev-parse HEAD)
 BUILDTIME := $(shell date -u "+%Y-%m-%d %H:%M:%S %Z")

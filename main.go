@@ -654,7 +654,7 @@ func bootvolumeDetails(bootVolumeId *string) {
 					fmt.Printf("\033[1;32m修改引导卷性能成功, 请稍后查看引导卷状态\033[0m\n")
 				}
 			} else if input == "2" {
-				_, err := updateBootVolume(bootVolume.Id, nil, common.Int64(20))
+				_, err := updateBootVolume(bootVolume.Id, nil, common.Int64(120))
 				if err != nil {
 					fmt.Printf("\033[1;31m修改引导卷性能失败.\033[0m %s\n", err.Error())
 				} else {
