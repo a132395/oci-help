@@ -539,9 +539,8 @@ func instanceDetails(instanceId *string) {
 		case 6:
 			fmt.Printf("修改OCPU大小[1-4], 请输入 (例如修改为4OCPU, 输入4): ")
 			var input string
-			var ocpus float32
 			fmt.Scanln(&input)
-			ocpus = float32(strconv.ParseFloat(input, 32))
+			ocpus, _ := strconv.ParseFloat(input, 32)
 			if ocpus > 0 {
 				_, err := updateInstance(instance.Id, &ocpus, nil)
 				if err != nil {
@@ -557,9 +556,8 @@ func instanceDetails(instanceId *string) {
 		case 7:
 			fmt.Printf("修改内存大小[1-24], 请输入 (例如修改为24GB内存, 输入24): ")
 			var input string
-			var memoryInGBs float32
 			fmt.Scanln(&input)
-			memoryInGBs = float32(strconv.ParseFloat(input, 32))
+			memoryInGBs,_ := strconv.ParseFloat(input, 32)
 			if memoryInGBs > 0 {
 				_, err := updateInstance(instance.Id, &memoryInGBs, nil)
 				if err != nil {
@@ -1795,7 +1793,7 @@ func ListInstances(ctx context.Context, c core.ComputeClient) ([]core.Instance, 
 }
 
 // 更新实例
-func updateInstance(instanceId *string, ocpus *int64, memoryInGBs *int64) (core.Instance, error) {
+func updateInstance(instanceId *string, ocpus *float32, memoryInGBs *float32) (core.Instance, error) {
 	updateInstanceDetails := core.UpdateInstanceDetails{}
 	if ocpus != nil {
 		updateInstanceDetails.ShapeConfig.Ocpus = ocpus
