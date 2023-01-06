@@ -1796,7 +1796,7 @@ func ListInstances(ctx context.Context, c core.ComputeClient) ([]core.Instance, 
 
 // 更新实例
 func updateInstance(instanceId *string, ocpus *int64, memoryInGBs *int64) (core.Instance, error) {
-	updateInstanceDetails := core.updateInstanceDetails{}
+	updateInstanceDetails := core.UpdateInstanceDetails{}
 	if ocpus != nil {
 		updateInstanceDetails.Ocpus = ocpus
 	}
