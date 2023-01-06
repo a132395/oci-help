@@ -470,7 +470,7 @@ func instanceDetails(instanceId *string) {
 		fmt.Printf("网络带宽(Gbps): %g\n", *instance.ShapeConfig.NetworkingBandwidthInGbps)
 		fmt.Printf("内存(GB): %g\n", *instance.ShapeConfig.MemoryInGBs)
 		fmt.Println("--------------------")
-		fmt.Printf("\n\033[1;32m1: %s   2: %s   3: %s   4: %s   5: %s\033[0m\n", "启动", "停止", "重启", "终止", "更换公共IP")
+		fmt.Printf("\n\033[1;32m1: %s   2: %s   3: %s   4: %s   5: %s   6: %s   7: %s\033[0m\n", "启动", "停止", "重启", "终止", "更换公共IP"，"更改OCPU大小"，"更改内存大小")
 		var input string
 		var num int
 		fmt.Print("\n请输入需要执行操作的序号: ")
@@ -535,6 +535,42 @@ func instanceDetails(instanceId *string) {
 				}
 				time.Sleep(3 * time.Second)
 			}
+		
+		case 6:
+			fmt.Printf("修改OCPU大小[1-4], 请输入 (例如修改为4OCPU, 输入4): ")
+			var input string
+			var ocpus int64
+			fmt.Scanln(&input)
+			ocpus, _ = strconv.ParseInt(input, 10, 64)
+			if ocpus > 0 {
+				_, err := updateInstance(instance.Id, &ocpus, nil)
+				if err != nil {
+					fmt.Printf("\033[1;31m修改OCPU大小失败.\033[0m %s\n", err.Error())
+				} else {
+					fmt.Printf("\033[1;32m修改OCPU大小成功, 请稍后查看实例信息\033[0m\n")
+				}
+			} else {
+				fmt.Printf("\033[1;31m输入错误.\033[0m\n")
+			}
+			time.Sleep(1 * time.Second)
+			
+		case 7:
+			fmt.Printf("修改内存大小[1-24], 请输入 (例如修改为24GB内存, 输入24): ")
+			var input string
+			var memoryInGBs int64
+			fmt.Scanln(&input)
+			memoryInGBs, _ = strconv.ParseInt(input, 10, 64)
+			if memoryInGBs > 0 {
+				_, err := updateInstance(instance.Id, &memoryInGBs, nil)
+				if err != nil {
+					fmt.Printf("\033[1;31m修改内存大小失败.\033[0m %s\n", err.Error())
+				} else {
+					fmt.Printf("\033[1;32m修改内存大小成功, 请稍后查看实例信息\033[0m\n")
+				}
+			} else {
+				fmt.Printf("\033[1;31m输入错误.\033[0m\n")
+			}
+			time.Sleep(1 * time.Second)
 
 		default:
 			listInstances()
@@ -1756,6 +1792,24 @@ func ListInstances(ctx context.Context, c core.ComputeClient) ([]core.Instance, 
 	}
 	resp, err := c.ListInstances(ctx, req)
 	return resp.Items, err
+}
+
+// 更新实例
+func updateInstance(instanceId *string, ocpus *int64, memoryInGBs *int64) (core.Instance, error) {
+	updateInstanceDetails := core.updateInstanceDetails{}
+	if ocpus != nil {
+		updateInstanceDetails.Ocpus = ocpus
+	}
+	if memoryInGBs != nil {
+		updateInstanceDetails.MemoryInGBs = memoryInGBs
+	}
+	req := core.UpdateInstanceRequest{
+		InstanceId:            instanceId,
+		UpdateInstanceDetails: updateInstanceDetails,
+		RequestMetadata:         getCustomRequestMetadataWithRetryPolicy(),
+	}
+	resp, err := computeClient.UpdateInstance(ctx, req)
+	return resp.Instance, err
 }
 
 func ListVnicAttachments(ctx context.Context, c core.ComputeClient, instanceId *string) ([]core.VnicAttachment, error) {
