@@ -541,7 +541,7 @@ func instanceDetails(instanceId *string) {
 			var input string
 			var ocpus float32
 			fmt.Scanln(&input)
-			ocpus, _ = strconv.ParseFloat(input, 32)
+			ocpus = float32(strconv.ParseFloat(input, 32))
 			if ocpus > 0 {
 				_, err := updateInstance(instance.Id, &ocpus, nil)
 				if err != nil {
@@ -559,7 +559,7 @@ func instanceDetails(instanceId *string) {
 			var input string
 			var memoryInGBs float32
 			fmt.Scanln(&input)
-			memoryInGBs, _ = strconv.ParseFloat(input, 32)
+			memoryInGBs = float32(strconv.ParseFloat(input, 32))
 			if memoryInGBs > 0 {
 				_, err := updateInstance(instance.Id, &memoryInGBs, nil)
 				if err != nil {
