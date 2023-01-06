@@ -1801,8 +1801,8 @@ func ListInstances(ctx context.Context, c core.ComputeClient) ([]core.Instance, 
 // 更新实例
 func updateInstance(instanceId *string, ocpus *float32, memoryInGBs *float32) (core.Instance, error) {
 	shapeConfig := &core.UpdateInstanceShapeConfigDetails{
-		Ocpus:      common.Float32(ocpus),
-		MemoryInGBs: common.Float32(memoryInGBs),
+		Ocpus:      common.Float32(*ocpus),
+		MemoryInGBs: common.Float32(*memoryInGBs),
 	}
 	updateInstanceDetails := core.UpdateInstanceDetails{
 	ShapeConfig: shapeConfig,
