@@ -541,7 +541,7 @@ func instanceDetails(instanceId *string) {
 			var input string
 			var ocpus64 float64
 			fmt.Scanln(&input)
-			ocpus64, _ := strconv.ParseFloat(input, 32)
+			ocpus64, _ = strconv.ParseFloat(input, 32)
 			var ocpus float32
 			ocpus = float32(ocpus64)
 			if ocpus > 0 {
@@ -561,7 +561,7 @@ func instanceDetails(instanceId *string) {
 			var input string
 			var memoryInGBs64 float64
 			fmt.Scanln(&input)
-			memoryInGBs64,_ := strconv.ParseFloat(input, 32)
+			memoryInGBs64,_ = strconv.ParseFloat(input, 32)
 			var memoryInGBs float32
 			memoryInGBs = float32(memoryInGBs64)
 			if memoryInGBs > 0 {
