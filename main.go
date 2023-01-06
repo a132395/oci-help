@@ -1802,6 +1802,11 @@ func ListInstances(ctx context.Context, c core.ComputeClient) ([]core.Instance, 
 
 // 更新实例
 func updateInstance(instanceId *string, ocpus *float32, memoryInGBs *float32) (core.Instance, error) {
+	computeClient, err = core.NewComputeClientWithConfigurationProvider(provider)
+	if err != nil {
+		printlnErr("创建 ComputeClient 失败", err.Error())
+		return
+	}
 	shapeConfig := &core.UpdateInstanceShapeConfigDetails{
 		Ocpus:      common.Float32(*ocpus),
 		MemoryInGBs: common.Float32(*memoryInGBs),
