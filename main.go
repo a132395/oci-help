@@ -540,6 +540,7 @@ func instanceDetails(instanceId *string) {
 			fmt.Printf("修改OCPU大小[1-4], 请输入 (例如修改为4OCPU, 输入4): ")
 			var input string
 			var ocpus64 float64
+			ocpus64 = 2
 			fmt.Scanln(&input)
 			ocpus64, _ = strconv.ParseFloat(input, 32)
 			var ocpus float32
@@ -560,6 +561,7 @@ func instanceDetails(instanceId *string) {
 			fmt.Printf("修改内存大小[1-24], 请输入 (例如修改为24GB内存, 输入24): ")
 			var input string
 			var memoryInGBs64 float64
+			memoryInGBs64 = 12
 			fmt.Scanln(&input)
 			memoryInGBs64,_ = strconv.ParseFloat(input, 32)
 			var memoryInGBs float32
