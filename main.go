@@ -539,8 +539,11 @@ func instanceDetails(instanceId *string) {
 		case 6:
 			fmt.Printf("修改OCPU大小[1-4], 请输入 (例如修改为4OCPU, 输入4): ")
 			var input string
+			var ocpus64 float64
 			fmt.Scanln(&input)
-			ocpus, _ := strconv.ParseFloat(input, 32)
+			ocpus64, _ := strconv.ParseFloat(input, 32)
+			var ocpus float32
+			ocpus = float32(ocpus64)
 			if ocpus > 0 {
 				_, err := updateInstance(instance.Id, &ocpus, nil)
 				if err != nil {
@@ -556,8 +559,11 @@ func instanceDetails(instanceId *string) {
 		case 7:
 			fmt.Printf("修改内存大小[1-24], 请输入 (例如修改为24GB内存, 输入24): ")
 			var input string
+			var memoryInGBs64 float64
 			fmt.Scanln(&input)
-			memoryInGBs,_ := strconv.ParseFloat(input, 32)
+			memoryInGBs64,_ := strconv.ParseFloat(input, 32)
+			var memoryInGBs float32
+			memoryInGBs = float32(memoryInGBs64)
 			if memoryInGBs > 0 {
 				_, err := updateInstance(instance.Id, &memoryInGBs, nil)
 				if err != nil {
